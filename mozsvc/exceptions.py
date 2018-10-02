@@ -6,7 +6,11 @@
 # ***** END LICENSE BLOCK *****
 """ Exceptions
 """
-from ConfigParser import Error
+
+try:
+    from ConfigParser import Error
+except ImportError:
+    from configparser import Error
 
 
 class BackendError(Exception):

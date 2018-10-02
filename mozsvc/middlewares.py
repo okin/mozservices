@@ -15,15 +15,11 @@ import simplejson as json
 import re
 import os
 import logging
-from ConfigParser import NoOptionError
 
-# Also support the newer "configparser" module, if installed.
 try:
-    import configparser
+    from ConfigParser import NoOptionError
 except ImportError:
-    pass
-else:
-    NoOptionError = (NoOptionError, configparser.NoOptionError)
+    from configparser import NoOptionError
 
 
 random.seed()
