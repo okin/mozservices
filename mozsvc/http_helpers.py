@@ -44,8 +44,12 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
     Returns:
         - tuple : status code, headers, body
     """
-    if isinstance(password, unicode):
-        password = password.encode('utf-8')
+    try:
+        if isinstance(password, unicode):
+            password = password.encode('utf-8')
+    except NameError:
+        # Only differentiate between str / unicode on Python 2.
+        pass
 
     req = Request(url, data=data)
     req.get_method = lambda: method
