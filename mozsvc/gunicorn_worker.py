@@ -133,13 +133,14 @@ class MozSvcGeventWorker(GeventWorker):
         with gevent.Timeout(self.cfg.timeout):
             return super(MozSvcGeventWorker, self).handle_request(*args)
 
-    def _greenlet_switch_tracer(self, what, (origin, target)):
+    def _greenlet_switch_tracer(self, what, args):
         """Callback method executed on every greenlet switch.
 
         The worker arranges for this method to be called on every greenlet
         switch.  It keeps track of which greenlet is currently active and
         increments a counter to track how many switches have been performed.
         """
+        (origin, target) = args
         # Increment the counter to indicate that a switch took place.
         # This will periodically be reset to zero by the monitoring thread,
         # so we don't need to worry about it growing without bound.
