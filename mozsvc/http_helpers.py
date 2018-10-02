@@ -52,7 +52,7 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
 
     try:
         res = urllib2.urlopen(req, timeout=timeout)
-    except urllib2.HTTPError, e:
+    except urllib2.HTTPError as e:
         if hasattr(e, 'headers'):
             headers = dict(e.headers)
         else:
@@ -65,7 +65,7 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
 
         return e.code, headers, body
 
-    except urllib2.URLError, e:
+    except urllib2.URLError as e:
         if isinstance(e.reason, socket.timeout):
             return 504, {}, str(e)
         return 502, {}, str(e)
