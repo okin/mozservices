@@ -4,9 +4,14 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import unittest
-import urllib2
 import socket
 from mozsvc.http_helpers import get_url, proxy
+import mozsvc.http_helpers
+
+try:
+    from urllib2 import HTTPError, URLError
+except ImportError:
+    from urllib.error import HTTPError, URLError
 
 
 class FakeResult(object):
@@ -23,11 +28,11 @@ class FakeResult(object):
 class TestHttp(unittest.TestCase):
 
     def setUp(self):
-        self.oldopen = urllib2.urlopen
-        urllib2.urlopen = self._urlopen
+        self.oldopen = mozsvc.http_helpers.urlopen
+        mozsvc.http_helpers.urlopen = self._urlopen
 
     def tearDown(self):
-        urllib2.urlopen = self.oldopen
+        mozsvc.http_helpers.urlopen = self.oldopen
 
     def _urlopen(self, req, timeout=None):
         url = req.get_full_url()
@@ -35,16 +40,16 @@ class TestHttp(unittest.TestCase):
             raise ValueError()
         if url == 'http://dwqkndwqpihqdw.com':
             msg = 'Name or service not known'
-            raise urllib2.URLError(socket.gaierror(-2, msg))
+            raise URLError(socket.gaierror(-2, msg))
 
         if url in ('http://google.com', 'http://goodauth'):
             return FakeResult()
         if url == 'http://badauth':
-            raise urllib2.HTTPError(url, 401, '', {}, None)
+            raise HTTPError(url, 401, '', {}, None)
         if url == 'http://timeout':
-            raise urllib2.URLError(socket.timeout())
+            raise URLError(socket.timeout())
         if url == 'http://error':
-            raise urllib2.HTTPError(url, 500, 'Error', {}, None)
+            raise HTTPError(url, 500, 'Error', {}, None)
         if url == 'http://newplace':
             res = FakeResult()
             res.body = url + ' ' + req.headers['Authorization']

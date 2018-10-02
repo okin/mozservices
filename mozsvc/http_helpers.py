@@ -6,7 +6,12 @@ from webob import Response
 import socket
 import base64
 from urlparse import urlparse, urlunparse
-from urllib2 import HTTPError, URLError, Request, urlopen
+
+try:
+    from urllib2 import HTTPError, URLError, Request, urlopen
+except ImportError:
+    from urllib.error import HTTPError, URLError
+    from urllib.request import Request, urlopen
 
 
 def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
