@@ -78,6 +78,8 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
             body = e.read()
         except AttributeError:
             body = ''
+        except KeyError:
+            body = e.reason
 
         return e.code, headers, body
     except URLError as e:
