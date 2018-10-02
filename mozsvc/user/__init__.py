@@ -26,6 +26,11 @@ import mozsvc.secrets
 from mozsvc.util import resolve_name
 from mozsvc.user.permissivenoncecache import PermissiveNonceCache
 
+try:
+    _STRING_CLASS = basestring
+except NameError:
+    _STRING_CLASS = str
+
 import logging
 logger = logging.getLogger("mozsvc.user")
 
@@ -100,7 +105,7 @@ class TokenServerAuthenticationPolicy(HawkAuthenticationPolicy):
                     "the [hawkauth] section of your configuration"]
             for msg in msgs:
                 mozsvc.logger.warn(msg)
-        elif isinstance(secrets, (basestring, list)):
+        elif isinstance(secrets, (_STRING_CLASS, list)):
             secrets = mozsvc.secrets.FixedSecrets(secrets)
         elif isinstance(secrets, dict):
             secrets = resolve_name(secrets.pop("backend"))(**secrets)

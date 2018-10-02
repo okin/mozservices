@@ -24,8 +24,10 @@ from mozsvc.exceptions import BackendError
 
 try:
     xrange
+    _STRING_CLASS = basestring
 except NameError:
     xrange = range
+    _STRING_CLASS = str
 
 logger = logging.getLogger("mozsvc.storage.mcclient")
 
@@ -55,7 +57,7 @@ class MemcachedClient(object):
             warnings.warn(msg, DeprecationWarning, stacklevel=1)
             if server is None:
                 server = kwds.pop("servers")
-                if not isinstance(server, basestring):
+                if not isinstance(server, _STRING_CLASS):
                     server = server[0]
         if server is None:
             server = "127.0.0.1:11211"
