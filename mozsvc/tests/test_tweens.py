@@ -90,7 +90,7 @@ class TestBackoffResponseTween(unittest.TestCase):
         # that had backoff headers, and the number that had unavailable errors.
         backoff_count = 0
         unavail_count = 0
-        for _ in xrange(count):
+        for _ in range(count):
             r = self._do_request("/")
             self.assertTrue(r.status_int in (200, 503))
             if r.status_int == 503:
