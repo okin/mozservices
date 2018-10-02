@@ -69,14 +69,14 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
     try:
         res = urlopen(req, timeout=timeout)
     except HTTPError as e:
-        if hasattr(e, 'headers'):
+        try:
             headers = dict(e.headers)
-        else:
+        except AttributeError:
             headers = {}
 
-        if hasattr(e, 'read'):
+        try:
             body = e.read()
-        else:
+        except AttributeError:
             body = ''
 
         return e.code, headers, body
