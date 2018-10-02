@@ -25,6 +25,10 @@ import umemcache
 
 from mozsvc.exceptions import BackendError
 
+try:
+    xrange
+except NameError:
+    xrange = range
 
 logger = logging.getLogger("mozsvc.storage.mcclient")
 
