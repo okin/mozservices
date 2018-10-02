@@ -5,7 +5,10 @@
 from webob import Response
 import socket
 import base64
-from urlparse import urlparse, urlunparse
+try:
+    from urlparse import urlparse, urlunparse
+except ImportError:
+    from urllib.parse import urlparse, urlunparse
 
 try:
     from urllib2 import HTTPError, URLError, Request, urlopen
