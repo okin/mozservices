@@ -20,6 +20,8 @@ requirements.
 
 """
 
+from __future__ import print_function
+
 import sys
 import csv
 import binascii
@@ -179,7 +181,7 @@ def manage(args):
 
     """
     def report_usage_error():
-        print>>sys.stderr, "\n".join(manage.__doc__.split("\n")[1:])
+        print("\n".join(manage.__doc__.split("\n")[1:]), file=sys.stderr)
         return 1
 
     if len(args) < 2:
@@ -194,13 +196,13 @@ def manage(args):
             return report_usage_error()
         except IndexError:
             size = 32
-        print os.urandom(size).encode('hex')
+        print(os.urandom(size).encode('hex'))
         return 0
 
     if args[1] == "derive":
         if len(args) != 4:
             return report_usage_error()
-        print DerivedSecrets([args[2]]).get(args[3])[0]
+        print(DerivedSecrets([args[2]]).get(args[3])[0])
         return 0
 
     return report_usage_error()
