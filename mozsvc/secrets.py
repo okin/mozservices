@@ -32,6 +32,11 @@ from collections import defaultdict
 
 from tokenlib.utils import HKDF
 
+try:
+    _STRING_CLASS = basestring
+except NameError:
+    _STRING_CLASS = str
+
 
 class Secrets(object):
     """Load node-specific secrets from a file.
@@ -114,7 +119,7 @@ class FixedSecrets(object):
 
     """
     def __init__(self, secrets):
-        if isinstance(secrets, basestring):
+        if isinstance(secrets, _STRING_CLASS):
             secrets = secrets.split()
         self._secrets = secrets
 
@@ -142,7 +147,7 @@ class DerivedSecrets(object):
     HKDF_INFO_NODE_SECRET = b"services.mozilla.com/mozsvc/v1/node_secret/"
 
     def __init__(self, master_secrets):
-        if isinstance(master_secrets, basestring):
+        if isinstance(master_secrets, _STRING_CLASS):
             master_secrets = master_secrets.split()
         self._master_secrets = master_secrets
 

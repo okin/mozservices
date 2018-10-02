@@ -135,7 +135,7 @@ class JsonLogFormatter(logging.Formatter):
         })
         # Include any custom attributes set on the record.
         # These would usually be collected metrics data.
-        for key, value in record.__dict__.iteritems():
+        for key, value in record.__dict__.items():
             if key not in self.DEFAULT_LOGRECORD_ATTRS:
                 details[key] = value
         # Only include the 'message' key if it has useful content

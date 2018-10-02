@@ -32,7 +32,8 @@ class TestSecrets(unittest2.TestCase):
         # We can only add one secret per second to the file, since
         # they are timestamped to 1s resolution.  Fake it.
         real_time = time.time
-        time.time = itertools.count(int(real_time())).next
+        counter = itertools.count(int(real_time()))
+        time.time = lambda: next(counter)
         try:
             secrets.add('phx23456')
             secrets.add('phx23456')

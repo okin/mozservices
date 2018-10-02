@@ -1,6 +1,5 @@
 pyramid>=1.5
 pyramid_debugtoolbar
-simplejson
 cef
 unittest2
 WebTest

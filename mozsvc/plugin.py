@@ -125,7 +125,7 @@ def load_from_settings(section_name, settings):
     """
     kwargs = {}
     prefix = section_name + "."
-    for name, value in settings.iteritems():
+    for name, value in settings.items():
         if name.startswith(prefix):
             kwargs[name[len(prefix):]] = value
     klass = resolve_name(kwargs.pop("backend"))

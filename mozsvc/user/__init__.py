@@ -10,6 +10,8 @@ Utilities for authentication via Mozilla's TokenServer auth system.
 
 """
 
+import logging
+
 from zope.interface import implements
 
 from pyramid.request import Request
@@ -26,7 +28,11 @@ import mozsvc.secrets
 from mozsvc.util import resolve_name
 from mozsvc.user.permissivenoncecache import PermissiveNonceCache
 
-import logging
+try:
+    _STRING_CLASS = basestring
+except NameError:
+    _STRING_CLASS = str
+
 logger = logging.getLogger("mozsvc.user")
 
 
@@ -100,7 +106,7 @@ class TokenServerAuthenticationPolicy(HawkAuthenticationPolicy):
                     "the [hawkauth] section of your configuration"]
             for msg in msgs:
                 mozsvc.logger.warn(msg)
-        elif isinstance(secrets, (basestring, list)):
+        elif isinstance(secrets, (_STRING_CLASS, list)):
             secrets = mozsvc.secrets.FixedSecrets(secrets)
         elif isinstance(secrets, dict):
             secrets = resolve_name(secrets.pop("backend"))(**secrets)

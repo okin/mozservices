@@ -9,17 +9,14 @@ the API of python-memcached/pylibmc.  It offers useful default behaviours
 for serialization, error reporting and connection pooling.
 """
 
+import contextlib
+import json
+import logging
+import Queue
 import sys
 import time
-import logging
-import warnings
 import traceback
-import contextlib
-import Queue
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import warnings
 
 import umemcache
 
@@ -27,8 +24,10 @@ from mozsvc.exceptions import BackendError
 
 try:
     xrange
+    _STRING_CLASS = basestring
 except NameError:
     xrange = range
+    _STRING_CLASS = str
 
 logger = logging.getLogger("mozsvc.storage.mcclient")
 
@@ -58,7 +57,7 @@ class MemcachedClient(object):
             warnings.warn(msg, DeprecationWarning, stacklevel=1)
             if server is None:
                 server = kwds.pop("servers")
-                if not isinstance(server, basestring):
+                if not isinstance(server, _STRING_CLASS):
                     server = server[0]
         if server is None:
             server = "127.0.0.1:11211"
@@ -159,7 +158,7 @@ class MemcachedClient(object):
             encoded_keys = [self._encode_key(key) for key in keys]
             encoded_items = mc.get_multi(encoded_keys)
         items = {}
-        for key, res in encoded_items.iteritems():
+        for key, res in encoded_items.items():
             assert res is not None
             data, flags = res
             items[self._decode_key(key)] = self._decode_value(data, flags)
