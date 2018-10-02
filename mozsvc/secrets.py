@@ -196,7 +196,7 @@ def manage(args):
             return report_usage_error()
         except IndexError:
             size = 32
-        print(os.urandom(size).encode('hex'))
+        print(binascii.b2a_hex(os.urandom(size // 2)))
         return 0
 
     if args[1] == "derive":
