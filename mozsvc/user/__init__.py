@@ -10,6 +10,8 @@ Utilities for authentication via Mozilla's TokenServer auth system.
 
 """
 
+import logging
+
 from zope.interface import implements
 
 from pyramid.request import Request
@@ -31,7 +33,6 @@ try:
 except NameError:
     _STRING_CLASS = str
 
-import logging
 logger = logging.getLogger("mozsvc.user")
 
 
