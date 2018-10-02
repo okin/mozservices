@@ -3,10 +3,10 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from webob import Response
-import urllib2
 import socket
 import base64
 from urlparse import urlparse, urlunparse
+from urllib2 import HTTPError, URLError, Request, urlopen
 
 
 def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
@@ -39,7 +39,7 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
     if isinstance(password, unicode):
         password = password.encode('utf-8')
 
-    req = urllib2.Request(url, data=data)
+    req = Request(url, data=data)
     req.get_method = lambda: method
 
     if user is not None and password is not None:
@@ -51,8 +51,8 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
             req.add_header(name, value)
 
     try:
-        res = urllib2.urlopen(req, timeout=timeout)
-    except urllib2.HTTPError as e:
+        res = urlopen(req, timeout=timeout)
+    except HTTPError as e:
         if hasattr(e, 'headers'):
             headers = dict(e.headers)
         else:
@@ -64,8 +64,7 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
             body = ''
 
         return e.code, headers, body
-
-    except urllib2.URLError as e:
+    except URLError as e:
         if isinstance(e.reason, socket.timeout):
             return 504, {}, str(e)
         return 502, {}, str(e)
