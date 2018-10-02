@@ -7,14 +7,15 @@
 """
 Various utilities
 """
-from hashlib import md5
-import traceback
-import random
-import string
-import simplejson as json
-import re
-import os
+
+import json
 import logging
+import os
+import random
+import re
+import string
+import traceback
+from hashlib import md5
 
 try:
     from ConfigParser import NoOptionError

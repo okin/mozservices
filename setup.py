@@ -13,7 +13,7 @@ with open(os.path.join(here, 'README.txt')) as f:
 with open(os.path.join(here, 'CHANGES.txt')) as f:
     CHANGES = f.read()
 
-requires = ['pyramid>=1.5', 'simplejson', 'konfig']
+requires = ['pyramid>=1.5', 'konfig']
 
 tests_require = requires + [
             'pyramid_hawkauth', 'tokenlib', 'hawkauthlib>=0.1.1',

@@ -9,17 +9,14 @@ the API of python-memcached/pylibmc.  It offers useful default behaviours
 for serialization, error reporting and connection pooling.
 """
 
+import contextlib
+import json
+import logging
+import Queue
 import sys
 import time
-import logging
-import warnings
 import traceback
-import contextlib
-import Queue
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import warnings
 
 import umemcache
 
