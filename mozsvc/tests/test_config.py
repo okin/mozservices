@@ -8,7 +8,10 @@
 import unittest
 import tempfile
 import os
-from StringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 from mozsvc.config import (Config, SettingsDict, load_into_settings,
                            get_configurator)

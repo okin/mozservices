@@ -1,5 +1,4 @@
 import unittest
-from StringIO import StringIO
 from textwrap import dedent
 
 from zope.interface import Interface, implements
@@ -9,6 +8,11 @@ from pyramid.config import Configurator, ConfigurationConflictError
 
 from mozsvc.config import Config
 from mozsvc.plugin import load_and_register
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 
 class ITest1(Interface):
