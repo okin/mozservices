@@ -55,7 +55,11 @@ def get_url(url, method='GET', data=None, user=None, password=None, timeout=5,
     req.get_method = lambda: method
 
     if user is not None and password is not None:
-        auth = base64.encodestring('%s:%s' % (user, password))
+        auth = '%s:%s' % (user, password)
+        try:
+            auth = base64.encodestring(auth)
+        except TypeError:  # most likely Python 3
+            auth = base64.encodebytes(auth.encode()).decode()
         req.add_header("Authorization", "Basic %s" % auth.strip())
 
     if extra_headers is not None:
