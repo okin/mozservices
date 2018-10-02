@@ -120,4 +120,4 @@ def proxy(request, scheme, netloc, timeout=5):
     status, headers, body = get_url(url, method, data, timeout=timeout,
                                     extra_headers=xheaders)
 
-    return Response(body, status, headers.items())
+    return Response(body, status, list(headers.items()))
