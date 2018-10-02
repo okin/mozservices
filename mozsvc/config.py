@@ -40,7 +40,7 @@ def load_into_settings(filename, settings):
     # Put values from the config file into the pyramid settings dict.
     for section in config.sections():
         setting_prefix = section.replace(":", ".")
-        for name, value in config.get_map(section).iteritems():
+        for name, value in config.get_map(section).items():
             if name not in konfig_keywords:
                 settings[setting_prefix + "." + name] = value
 

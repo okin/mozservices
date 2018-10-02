@@ -158,7 +158,7 @@ class MemcachedClient(object):
             encoded_keys = [self._encode_key(key) for key in keys]
             encoded_items = mc.get_multi(encoded_keys)
         items = {}
-        for key, res in encoded_items.iteritems():
+        for key, res in encoded_items.items():
             assert res is not None
             data, flags = res
             items[self._decode_key(key)] = self._decode_value(data, flags)
