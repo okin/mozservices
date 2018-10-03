@@ -1,7 +1,7 @@
 import unittest
 from textwrap import dedent
 
-from zope.interface import Interface, implements
+from zope.interface import Interface, implementer
 from zope.interface.verify import verifyObject
 
 from pyramid.config import Configurator, ConfigurationConflictError
@@ -25,25 +25,25 @@ class ITest2(Interface):
     pass
 
 
+@implementer(ITest1)
 class Test1(object):
     """A concrete implementation of ITest1."""
-    implements(ITest1)
 
     def __init__(self, **kwds):
         self.kwds = kwds
 
 
+@implementer(ITest2)
 class Test2(object):
     """A concrete implementation of ITest2."""
-    implements(ITest2)
 
     def __init__(self, **kwds):
         self.kwds = kwds
 
 
+@implementer(ITest1, ITest2)
 class Test1And2(object):
     """A concrete implementation of both ITest1 and ITest2."""
-    implements(ITest1, ITest2)
 
     def __init__(self, **kwds):
         self.kwds = kwds

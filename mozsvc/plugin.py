@@ -20,10 +20,10 @@ like so::
 
 And a concrete implementation of it in "mymodule.MyPluginImpl"::
 
-    from zope.interface import implements
+    from zope.interface import implementer
 
+    @implementer(IMyPlugin)
     class MyPluginImpl(object):
-        implements(IMyPlugin)
         def __init__(self, foo, bar):
             pass
 

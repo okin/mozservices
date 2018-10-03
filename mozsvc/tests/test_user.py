@@ -9,7 +9,7 @@ import time
 import unittest2
 import tempfile
 
-from zope.interface import implements
+from zope.interface import implementer
 
 import pyramid.testing
 import pyramid.request
@@ -55,6 +55,7 @@ class ExpandoRequest(object):
             self.__dict__[attr] = value
 
 
+@implementer(IAuthenticationPolicy)
 class StubAuthenticationPolicy(object):
     """Authentication policy taking creds from request headers.
 
@@ -62,8 +63,6 @@ class StubAuthenticationPolicy(object):
     X-Username header, checks that it matches the password provided in
     the X-Password header, and returns that as the userid.
     """
-
-    implements(IAuthenticationPolicy)
 
     def authenticated_userid(self, request):
         username = request.environ.get("HTTP_X_USERNAME")

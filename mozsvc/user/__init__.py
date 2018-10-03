@@ -12,7 +12,7 @@ Utilities for authentication via Mozilla's TokenServer auth system.
 
 import logging
 
-from zope.interface import implements
+from zope.interface import implementer
 
 from pyramid.request import Request
 from pyramid.authorization import ACLAuthorizationPolicy
@@ -78,6 +78,7 @@ class RequestWithUser(Request):
     user = property(_get_user, _set_user)
 
 
+@implementer(IAuthenticationPolicy)
 class TokenServerAuthenticationPolicy(HawkAuthenticationPolicy):
     """Pyramid authentication policy for use with Tokenserver auth tokens.
 
@@ -91,8 +92,6 @@ class TokenServerAuthenticationPolicy(HawkAuthenticationPolicy):
     node hostnames to secrets (via the argument 'secrets_file').  The
     two arguments are mutually exclusive.
     """
-
-    implements(IAuthenticationPolicy)
 
     def __init__(self, secrets=None, **kwds):
         if not secrets:
