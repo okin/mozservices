@@ -8,14 +8,18 @@
 import json
 import time
 import socket
-import urllib
 import logging
-import urlparse
 import traceback
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
 
 from pyramid.util import DottedNameResolver
+
+try:
+    from urlparse import urlparse, urlunparse
+    from urllib import splitport, splituser
+except ImportError:
+    from urllib.parse import urlparse, urlunparse, splitport, splituser
 
 
 def round_time(value=None, precision=2):
@@ -85,9 +89,9 @@ def dnslookup(url):
         gethostbyname = socket.gethostbyname
 
     # parsing
-    parsed_url = urlparse.urlparse(url)
-    host, port = urllib.splitport(parsed_url.netloc)
-    user, host = urllib.splituser(host)
+    parsed_url = urlparse(url)
+    host, port = splitport(parsed_url.netloc)
+    user, host = splituser(host)
 
     # resolving the host
     host = gethostbyname(host)
@@ -100,7 +104,7 @@ def dnslookup(url):
         host = '%s@%s' % (user, host)
 
     parts = [parsed_url[0]] + [host] + list(parsed_url[2:])
-    return urlparse.urlunparse(parts)
+    return urlunparse(parts)
 
 
 class JsonLogFormatter(logging.Formatter):
