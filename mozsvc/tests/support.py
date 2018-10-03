@@ -14,7 +14,6 @@ from wsgiproxy.app import WSGIProxyApp
 
 from mozsvc.config import get_configurator
 
-
 try:
     from urlparse import urlparse
 except ImportError:
