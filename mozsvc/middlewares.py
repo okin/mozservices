@@ -13,7 +13,6 @@ import logging
 import os
 import random
 import re
-import string
 import traceback
 from hashlib import md5
 
@@ -22,12 +21,17 @@ try:
 except ImportError:
     from configparser import NoOptionError
 
+try:
+    from string import digits, letters
+except ImportError:
+    from string import digits, ascii_letters as letters
+
 
 random.seed()
 _RE_CODE = re.compile('[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}')
 
 
-def randchar(chars=string.digits + string.letters):
+def randchar(chars=digits + letters):
     """Generates a random char using urandom.
 
     If the system does not support it, the function fallbacks on random.choice
