@@ -135,4 +135,10 @@ def create_hash(data):
     """
     rand = ''.join([randchar() for x in range(10)])
     data += rand
-    return md5(data + rand).hexdigest()
+
+    try:
+        hashed = md5(data + rand)
+    except TypeError:
+        hashed = md5((data + rand).encode())
+
+    return hashed.hexdigest()
