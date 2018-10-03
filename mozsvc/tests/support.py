@@ -10,7 +10,7 @@ from pyramid.request import Request
 from pyramid.interfaces import IRequestFactory
 
 from webtest import TestApp
-from wsgiproxy.app import WSGIProxyApp
+from wsgiproxy2 import HostProxy
 
 from mozsvc.config import get_configurator
 
@@ -120,7 +120,7 @@ class FunctionalTestCase(TestCase):
         else:
             self.distant = True
             self.host_url = test_remote
-            application = WSGIProxyApp(test_remote)
+            application = HostProxy(test_remote)
             # Explicitly commit so that calling code can introspect the config.
             self.config.commit()
 

@@ -3,7 +3,7 @@ pyramid_debugtoolbar
 cef
 unittest2
 WebTest
-WSGIProxy
+wsgiproxy2
 pyramid_hawkauth
 tokenlib
 hawkauthlib
