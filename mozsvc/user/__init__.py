@@ -131,9 +131,11 @@ class TokenServerAuthenticationPolicy(HawkAuthenticationPolicy):
         elif "secret" in settings:
             secrets["backend"] = "mozsvc.secrets.FixedSecrets"
             secrets["secrets"] = settings.pop("secret")
-        for name in settings.keys():
+
+        for name in list(settings.keys()):
             if name.startswith(secrets_prefix):
                 secrets[name[len(secrets_prefix):]] = settings.pop(name)
+
         kwds['secrets'] = secrets
         return kwds
 
