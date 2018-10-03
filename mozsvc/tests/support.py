@@ -10,7 +10,7 @@ from pyramid.request import Request
 from pyramid.interfaces import IRequestFactory
 
 from webtest import TestApp
-from wsgiproxy2 import HostProxy
+from wsgiproxy import HostProxy
 
 from mozsvc.config import get_configurator
 
