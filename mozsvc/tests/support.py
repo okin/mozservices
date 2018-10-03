@@ -5,7 +5,6 @@
 import os
 import sys
 import unittest2
-import urlparse
 
 from pyramid.request import Request
 from pyramid.interfaces import IRequestFactory
@@ -14,6 +13,12 @@ from webtest import TestApp
 from wsgiproxy.app import WSGIProxyApp
 
 from mozsvc.config import get_configurator
+
+
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
 
 
 def get_test_configurator(root, ini_file="tests.ini"):
@@ -120,7 +125,7 @@ class FunctionalTestCase(TestCase):
             # Explicitly commit so that calling code can introspect the config.
             self.config.commit()
 
-        host_url = urlparse.urlparse(self.host_url)
+        host_url = urlparse(self.host_url)
         self.app = TestApp(application, extra_environ={
             "HTTP_HOST": host_url.netloc,
             "wsgi.url_scheme": host_url.scheme or "http",
