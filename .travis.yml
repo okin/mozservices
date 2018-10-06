@@ -17,7 +17,7 @@ notifications:
 
 install:
   - pip install flake8
-  - python setup.py develop
+  - pip install .[memcache]
 
 script:
   - flake8 ./mozsvc
