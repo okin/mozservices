@@ -223,9 +223,9 @@ EMPTY_SLOT = (sys.maxint, None)
 
 
 class MCClientPool(object):
-    """Pool of umemcache.Client objects, with periodic purging of connections.
+    """Pool of memcache.Client objects, with periodic purging of connections.
 
-    This class implements a simple pool of umemcache Client objects, with
+    This class implements a simple pool of memcache Client objects, with
     periodically closing and refreshing of the pooled Client objects.  This
     seems to work around some occasional hangs that were occurring with
     long-lived clients.
