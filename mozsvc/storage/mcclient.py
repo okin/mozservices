@@ -271,7 +271,6 @@ class MCClientPool(object):
     def _create_client(self):
         """Create a new Client object."""
         client = memcache.Client([self.server], debug=0)
-        client.connect()
         return client
 
     def _checkout_client(self):
