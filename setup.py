@@ -21,7 +21,7 @@ tests_require = requires + [
             'gunicorn', 'gevent', 'testfixtures']
 
 extras_require = {
-    'memcache': ['umemcache>=1.3'],
+    'memcache': ['python-memcached>=1.59'],
 }
 
 

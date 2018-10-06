@@ -21,7 +21,7 @@ try:
 except ImportError:
     import json
 
-import umemcache
+import memcache
 
 from mozsvc.exceptions import BackendError
 
@@ -270,7 +270,7 @@ class MCClientPool(object):
 
     def _create_client(self):
         """Create a new Client object."""
-        client = umemcache.Client(self.server)
+        client = memcache.Client([self.server], debug=0)
         client.connect()
         return client
 
