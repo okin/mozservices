@@ -309,9 +309,13 @@ class TestMemcachedNonceCache(unittest2.TestCase):
             try:
                 MemcachedClient().get("")
             except BackendError:
-                MEMCACHED = False
+                raise unittest2.SkipTest(
+                    "Got backend error retrieving value from memcache. "
+                    "Probably no memcache running."
+                )
             else:
                 MEMCACHED = True
+
         if not MEMCACHED:
             raise unittest2.SkipTest("no memcache")
         self.nc = None
