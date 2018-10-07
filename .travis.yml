@@ -6,6 +6,9 @@ python:
  - "3.6"
  - "3.7-dev"
 
+services:
+  - memcached
+
 notifications:
   email:
     - rfkelly@mozilla.com
@@ -17,7 +20,7 @@ notifications:
 
 install:
   - pip install flake8
-  - python setup.py develop
+  - CFLAGS="-Wno-error=write-strings" pip install .[memcache]
 
 script:
   - flake8 ./mozsvc

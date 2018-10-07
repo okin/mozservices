@@ -30,7 +30,8 @@ try:
     from mozsvc.user.noncecache import MemcachedNonceCache
     # We'll test for a live memcached server when we actually run the tests.
     MEMCACHED = None
-except (ImportError, BackendError):
+except (ImportError, BackendError) as err:
+    print("Import of memcache classes failed: {}".format(err))
     MEMCACHED = False
 
 
@@ -307,10 +308,14 @@ class TestMemcachedNonceCache(unittest2.TestCase):
         if MEMCACHED is None:
             try:
                 MemcachedClient().get("")
-            except BackendError:
-                MEMCACHED = False
+            except BackendError as err:
+                raise unittest2.SkipTest(
+                    "Got backend error ({!r}) retrieving value from "
+                    "memcache. Probably no memcache running.".format(err)
+                )
             else:
                 MEMCACHED = True
+
         if not MEMCACHED:
             raise unittest2.SkipTest("no memcache")
         self.nc = None
